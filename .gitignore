@@ -12,3 +12,4 @@ gpt_personachat_cache_v2/
 *dataset_cache*
 tokenizer_vi/
 gpt2_vi_pretrain/
+datafile.json
