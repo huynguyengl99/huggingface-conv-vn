@@ -17,8 +17,7 @@ from projects.convai2.eval_hits import eval_hits, setup_args as setup_args_hits
 from projects.convai2.eval_f1 import eval_f1, setup_args as setup_args_f1
 from projects.convai2.eval_ppl import eval_ppl, setup_args as setup_args_ppl
 from projects.convai2.build_dict import build_dict
-from transformers import (OpenAIGPTDoubleHeadsModel, OpenAIGPTLMHeadModel, OpenAIGPTTokenizer,
-                                  GPT2DoubleHeadsModel, GPT2LMHeadModel, GPT2Tokenizer)
+from transformers import (GPT2DoubleHeadsModel, GPT2LMHeadModel, GPT2Tokenizer)
 
 from train import build_input_from_segments, pad_dataset, SPECIAL_TOKENS, add_special_tokens_
 from utils import download_pretrained_model, AttrDict
@@ -57,16 +56,11 @@ class TransformerAgent(Agent):
 
         if shared is None:
             self.logger.info("Get pretrained model and tokenizer")
-            if args.model_checkpoint == "":
-                args.model_checkpoint = download_pretrained_model()
-            if 'gpt2' in args.model_checkpoint:
-                self.tokenizer = GPT2Tokenizer.from_pretrained(args.model_checkpoint)
-                model_class = GPT2DoubleHeadsModel if self.args.eval_type == "hits@1" else GPT2LMHeadModel
-            else:
-                self.tokenizer = OpenAIGPTTokenizer.from_pretrained(args.model_checkpoint)
-                model_class = OpenAIGPTDoubleHeadsModel if self.args.eval_type == "hits@1" else OpenAIGPTLMHeadModel
-
-            self.model_checkpoint = model_class.from_pretrained(args.model_checkpoint)
+            # if args.model_checkpoint == "":
+            #     args.model_checkpoint = download_pretrained_model()
+            self.tokenizer = GPT2Tokenizer.from_pretrained('/tokenizer_vi')
+            model_class = GPT2DoubleHeadsModel if self.args.eval_type == "hits@1" else GPT2LMHeadModel
+            self.model_checkpoint = model_class.from_pretrained('/gpt2_vi_pretrain')
             self.model_checkpoint.to(args.device)
 
             self.logger.info("Build BPE prefix dictionary")

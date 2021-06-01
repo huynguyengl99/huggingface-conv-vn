@@ -109,11 +109,11 @@ def run():
     logger = logging.getLogger(__file__)
     logger.info(pformat(args))
 
-    if args.model_checkpoint == "":
-        if args.model == 'gpt2':
-            raise ValueError("Interacting with GPT2 requires passing a finetuned model_checkpoint")
-        else:
-            args.model_checkpoint = download_pretrained_model()
+    # if args.model_checkpoint == "":
+    #     if args.model == 'gpt2':
+    #         raise ValueError("Interacting with GPT2 requires passing a finetuned model_checkpoint")
+    #     else:
+    #         args.model_checkpoint = download_pretrained_model()
 	
 	
     if args.seed != 0:
@@ -123,9 +123,9 @@ def run():
 
 
     logger.info("Get pretrained model and tokenizer")
-    tokenizer_class, model_class = (GPT2Tokenizer, GPT2LMHeadModel) if args.model == 'gpt2' else (OpenAIGPTTokenizer, OpenAIGPTLMHeadModel)
-    tokenizer = tokenizer_class.from_pretrained(args.model_checkpoint)
-    model = model_class.from_pretrained(args.model_checkpoint)
+    tokenizer_class, model_class = (GPT2Tokenizer, GPT2LMHeadModel)
+    tokenizer = tokenizer_class.from_pretrained('/tokenizer_vi')
+    model = model_class.from_pretrained('/gpt2_vi_pretrain')
     model.to(args.device)
     add_special_tokens_(model, tokenizer)
 
