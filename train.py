@@ -39,10 +39,14 @@ def average_distributed_scalar(scalar, args):
 
 def pad_dataset(dataset, padding=0):
     """ Pad the dataset. This could be optimized by defining a Dataset class and padding at the batch level, but this is simpler. """
-    max_l = max(len(x) for x in dataset["input_ids"])
-    for name in PADDED_INPUTS:
-        dataset[name] = [x + [padding if name != "lm_labels" else -100] * (max_l - len(x)) for x in dataset[name]]
-    return dataset
+    try:
+        max_l = max(len(x) for x in dataset["input_ids"])
+        for name in PADDED_INPUTS:
+            dataset[name] = [x + [padding if name != "lm_labels" else -100] * (max_l - len(x)) for x in dataset[name]]
+        return dataset
+    except Exception as e:
+        import pdb
+        pdb.set_trace()
 
 
 def add_special_tokens_(model, tokenizer):
@@ -93,7 +97,6 @@ def get_data_loaders(args, tokenizer):
 
     logger.info("Pad inputs and convert to Tensor")
     tensor_datasets = {"train": [], "valid": []}
-    import pdb; pdb.set_trace()
     for dataset_name, dataset in datasets.items():
         dataset = pad_dataset(dataset, padding=tokenizer.convert_tokens_to_ids(SPECIAL_TOKENS[-1]))
         for input_name in MODEL_INPUTS:
