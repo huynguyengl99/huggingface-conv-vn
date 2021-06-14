@@ -58,9 +58,9 @@ class TransformerAgent(Agent):
             self.logger.info("Get pretrained model and tokenizer")
             # if args.model_checkpoint == "":
             #     args.model_checkpoint = download_pretrained_model()
-            self.tokenizer = GPT2Tokenizer.from_pretrained('./tokenizer_vi')
+            self.tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
             model_class = GPT2DoubleHeadsModel if self.args.eval_type == "hits@1" else GPT2LMHeadModel
-            self.model_checkpoint = model_class.from_pretrained('./gpt2_vi_pretrain')
+            self.model_checkpoint = model_class.from_pretrained('gpt2')
             self.model_checkpoint.to(args.device)
 
             self.logger.info("Build BPE prefix dictionary")

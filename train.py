@@ -153,11 +153,11 @@ def train():
 
     logger.info("Prepare tokenizer, pretrained model and optimizer.")
     tokenizer_class = GPT2Tokenizer
-    tokenizer = tokenizer_class.from_pretrained('./tokenizer_vi')
+    tokenizer = tokenizer_class.from_pretrained('gpt2')
 
 
     model_class = GPT2DoubleHeadsModel
-    model = model_class.from_pretrained('./gpt2_vi_pretrain')
+    model = model_class.from_pretrained('gpt2')
     model.to(args.device)
     # Add special tokens if they are not already added
     add_special_tokens_(model, tokenizer)
