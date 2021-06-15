@@ -150,7 +150,7 @@ def train():
 
     logger.info("Prepare tokenizer, pretrained model and optimizer.")
     tokenizer_class = GPT2Tokenizer if "gpt2" in args.model_checkpoint else OpenAIGPTTokenizer # cant use Autotokenizer because checkpoint could be a Path
-    tokenizer = tokenizer_class.from_pretrained(args.model_checkpoint)
+    tokenizer = tokenizer_class.from_pretrained('./tokenizer_vi')
 
 
     model_class = GPT2DoubleHeadsModel if "gpt2" in args.model_checkpoint else OpenAIGPTDoubleHeadsModel

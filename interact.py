@@ -124,7 +124,7 @@ def run():
 
     logger.info("Get pretrained model and tokenizer")
     tokenizer_class, model_class = (GPT2Tokenizer, GPT2LMHeadModel) if args.model == 'gpt2' else (OpenAIGPTTokenizer, OpenAIGPTLMHeadModel)
-    tokenizer = tokenizer_class.from_pretrained(args.model_checkpoint)
+    tokenizer = tokenizer_class.from_pretrained('./tokenizer_vi')
     model = model_class.from_pretrained(args.model_checkpoint)
     model.to(args.device)
     add_special_tokens_(model, tokenizer)
