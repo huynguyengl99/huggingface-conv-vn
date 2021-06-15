@@ -16,7 +16,7 @@ from ignite.handlers import ModelCheckpoint, global_step_from_engine
 from ignite.metrics import Accuracy, Loss, MetricsLambda, RunningAverage
 from ignite.contrib.handlers import ProgressBar, PiecewiseLinear
 from ignite.contrib.handlers.tensorboard_logger import TensorboardLogger, OutputHandler, OptimizerParamsHandler
-from transformers import (AdamW, GPT2DoubleHeadsModel, GPT2Tokenizer, WEIGHTS_NAME, CONFIG_NAME)
+from transformers import (AdamW, OpenAIGPTDoubleHeadsModel, OpenAIGPTTokenizer, WEIGHTS_NAME, CONFIG_NAME)
 
 from utils import get_dataset, make_logdir
 
@@ -152,11 +152,11 @@ def train():
         torch.distributed.init_process_group(backend='nccl', init_method='env://')
 
     logger.info("Prepare tokenizer, pretrained model and optimizer.")
-    tokenizer_class = GPT2Tokenizer
+    tokenizer_class = OpenAIGPTTokenizer
     tokenizer = tokenizer_class.from_pretrained('./tokenizer_vi')
 
 
-    model_class = GPT2DoubleHeadsModel
+    model_class = OpenAIGPTDoubleHeadsModel
     model = model_class.from_pretrained('openai-gpt')
     model.to(args.device)
     # Add special tokens if they are not already added
