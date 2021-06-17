@@ -12,7 +12,7 @@ import warnings
 import torch
 import torch.nn.functional as F
 
-from transformers import OpenAIGPTLMHeadModel, OpenAIGPTTokenizer, GPT2LMHeadModel, OpenAIGPTTokenizer
+from transformers import OpenAIGPTLMHeadModel, GPT2Tokenizer, OpenAIGPTLMHeadModel
 from train import SPECIAL_TOKENS, build_input_from_segments, add_special_tokens_
 from utils import get_dataset, download_pretrained_model
 
@@ -123,7 +123,7 @@ def run():
 
 
     logger.info("Get pretrained model and tokenizer")
-    tokenizer_class, model_class = (OpenAIGPTTokenizer, GPT2LMHeadModel)
+    tokenizer_class, model_class = (GPT2Tokenizer, OpenAIGPTLMHeadModel)
     tokenizer = tokenizer_class.from_pretrained('./tokenizer_vi')
     model = model_class.from_pretrained('openai-gpt')
     model.to(args.device)

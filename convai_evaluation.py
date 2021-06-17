@@ -17,7 +17,7 @@ from projects.convai2.eval_hits import eval_hits, setup_args as setup_args_hits
 from projects.convai2.eval_f1 import eval_f1, setup_args as setup_args_f1
 from projects.convai2.eval_ppl import eval_ppl, setup_args as setup_args_ppl
 from projects.convai2.build_dict import build_dict
-from transformers import (OpenAIGPTDoubleHeadsModel, GPT2LMHeadModel, OpenAIGPTTokenizer)
+from transformers import (OpenAIGPTDoubleHeadsModel, OpenAIGPTLMHeadModel, GPT2Tokenizer)
 
 from train import build_input_from_segments, pad_dataset, SPECIAL_TOKENS, add_special_tokens_
 from utils import download_pretrained_model, AttrDict
@@ -58,8 +58,8 @@ class TransformerAgent(Agent):
             self.logger.info("Get pretrained model and tokenizer")
             # if args.model_checkpoint == "":
             #     args.model_checkpoint = download_pretrained_model()
-            self.tokenizer = OpenAIGPTTokenizer.from_pretrained('./tokenizer_vi')
-            model_class = OpenAIGPTDoubleHeadsModel if self.args.eval_type == "hits@1" else GPT2LMHeadModel
+            self.tokenizer = GPT2Tokenizer.from_pretrained('./tokenizer_vi')
+            model_class = OpenAIGPTDoubleHeadsModel if self.args.eval_type == "hits@1" else OpenAIGPTLMHeadModel
             self.model_checkpoint = model_class.from_pretrained('openai-gpt')
             self.model_checkpoint.to(args.device)
 
